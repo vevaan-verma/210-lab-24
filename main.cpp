@@ -1,17 +1,17 @@
-// COMSC-210 | Lab 23 | Vevaan Verma
+// COMSC-210 | Lab 24 | Vevaan Verma
 using namespace std;
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <string>
-#include <list>
+#include <set>
 #include "Goat.h"
 
 /* FUNCTION PROTOTYPES */
-int select_goat(list<Goat> trip);
-void add_goat(list<Goat>& trip, string[], string[]);
-void delete_goat(list<Goat>& trip);
-void display_trip(list<Goat> trip);
+int select_goat(set<Goat> trip);
+void add_goat(set<Goat>& trip, string[], string[]);
+void delete_goat(set<Goat>& trip);
+void display_trip(set<Goat> trip);
 int main_menu();
 int getValidatedChoice(int min, int max);
 
@@ -44,7 +44,7 @@ int main() {
 
 	fin1.close();
 
-	list<Goat> trip; // create a list of goats
+	set<Goat> trip; // create a set of goats
 	int choice = main_menu();
 	cout << endl; // blank line for formatting purposes
 
@@ -93,13 +93,13 @@ int main_menu() {
 }
 
 // select_goat() displays the goats in the trip and gets the user's choice
-// arguments: list<Goat> trip - the list of goats
+// arguments: set<Goat> trip - the set of goats
 // returns: int - the user's choice
-int select_goat(list<Goat> trip) {
+int select_goat(set<Goat> trip) {
 
 	int count = 1;
 
-	for (list<Goat>::iterator iterator = trip.begin(); iterator != trip.end(); iterator++) { // iterate through the list of goats
+	for (set<Goat>::iterator iterator = trip.begin(); iterator != trip.end(); iterator++) { // iterate through the set of goats
 
 		cout << "[" << count << "] " << (*iterator).get_name() << " (" << (*iterator).get_age() << ", " << (*iterator).get_color() << ")" << endl; // output the goat's name, age, and color
 		count++; // increment the count
@@ -107,41 +107,41 @@ int select_goat(list<Goat> trip) {
 	}
 
 	cout << "Select a goat: "; // prompt the user to select a goat
-	return getValidatedChoice(1, trip.size()) - 1; // return the user's choice (validated to be between 1 and the size of the list) minus 1 (to get the index of the goat in the list)
+	return getValidatedChoice(1, trip.size()) - 1; // return the user's choice (validated to be between 1 and the size of the set) minus 1 (to get the index of the goat in the set)
 
 }
 
 // add_goat() adds a goat to the trip
-// arguments: list<Goat> trip - the list of goats, string names[] - the array of names, string colors[] - the array of colors
+// arguments: set<Goat> trip - the set of goats, string names[] - the array of names, string colors[] - the array of colors
 // returns: none
-void add_goat(list<Goat>& trip, string names[], string colors[]) {
+void add_goat(set<Goat>& trip, string names[], string colors[]) {
 
 	Goat goat(names[rand() % SZ_NAMES], rand() % MAX_AGE, colors[rand() % SZ_COLORS]); // create a goat with a random name (from the names array), random age (from 0 to MAX_AGE), and random color (from the colors array)
-	trip.push_back(goat); // add the goat to the list
+	trip.insert(goat); // add the goat to the set
 
 }
 
 // delete_goat() deletes a goat from the trip
-// arguments: list<Goat> trip - the list of goats
+// arguments: set<Goat> trip - the set of goats
 // returns: none
-void delete_goat(list<Goat>& trip) {
+void delete_goat(set<Goat>& trip) {
 
 	int index = select_goat(trip); // get the index of the goat to delete
 	cout << endl; // blank line for formatting purposes
-	list<Goat>::iterator it = trip.begin(); // create an iterator to the beginning of the list
+	set<Goat>::iterator it = trip.begin(); // create an iterator to the beginning of the set
 	advance(it, index); // advance the iterator to the index of the goat to delete
 	trip.erase(it); // delete the goat
 
 }
 
 // display_trip() outputs all the goats in the trip
-// arguments: list<Goat> trip - the list of goats
+// arguments: set<Goat> trip - the set of goats
 // returns: none
-void display_trip(list<Goat> trip) {
+void display_trip(set<Goat> trip) {
 
 	cout << "*** TRIP ***\n"; // output the trip header
 
-	for (list<Goat>::iterator iterator = trip.begin(); iterator != trip.end(); iterator++) // iterate through the list of goats
+	for (set<Goat>::iterator iterator = trip.begin(); iterator != trip.end(); iterator++) // iterate through the set of goats
 		cout << (*iterator).get_name() << " (" << (*iterator).get_age() << ", " << (*iterator).get_color() << ")" << endl; // output the goat's name, age, and color
 
 	cout << endl; // blank line for formatting purposes
